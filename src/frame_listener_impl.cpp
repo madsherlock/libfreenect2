@@ -124,10 +124,9 @@ bool SyncMultiFrameListener::waitForNewFrame(FrameMap &frame, int milliseconds)
   {
     return false;
   }
-#else
+#endif // LIBFREENECT2_THREADING_STDLIB
   waitForNewFrame(frame);
   return true;
-#endif // LIBFREENECT2_THREADING_STDLIB
 }
 
 void SyncMultiFrameListener::waitForNewFrame(FrameMap &frame)
