@@ -28,6 +28,7 @@
 
 #include <libfreenect2/frame_listener_impl.h>
 #include <libfreenect2/threading.h>
+#include <functional> //std::bind
 
 namespace libfreenect2
 {
