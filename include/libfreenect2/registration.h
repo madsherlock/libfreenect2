@@ -37,7 +37,32 @@
 namespace libfreenect2
 {
 
-class RegistrationImpl;
+class RegistrationImpl
+{
+public:
+  RegistrationImpl(Freenect2Device::IrCameraParams depth_p, Freenect2Device::ColorCameraParams rgb_p);
+
+  void apply(int dx, int dy, float dz, float& cx, float &cy) const;
+  void apply(const Frame* rgb, const Frame* depth, Frame* undistorted, Frame* registered, const bool enable_filter, Frame* bigdepth, int* color_depth_map) const;
+  void undistortDepth(const Frame *depth, Frame *undistorted) const;
+  void getPointXYZRGB (const Frame* undistorted, const Frame* registered, int r, int c, float& x, float& y, float& z, float& rgb) const;
+  void getPointXYZ (const Frame* undistorted, int r, int c, float& x, float& y, float& z) const;
+  void distort(int mx, int my, float& dx, float& dy) const;
+  void depth_to_color(float mx, float my, float& rx, float& ry) const;
+
+  Freenect2Device::IrCameraParams depth;    ///< Depth camera parameters.
+  Freenect2Device::ColorCameraParams color; ///< Color camera parameters.
+
+  int distort_map[512 * 424];
+  float depth_to_color_map_x[512 * 424];
+  float depth_to_color_map_y[512 * 424];
+  int depth_to_color_map_yi[512 * 424];
+
+  const int filter_width_half;
+  const int filter_height_half;
+  const float filter_tolerance;
+};
+
 
 /** @defgroup registration Registration and Geometry
  * Register depth to color, create point clouds. */
@@ -114,9 +139,9 @@ public:
    */
   void getPointXYZ (const Frame* undistorted, int r, int c, float& x, float& y, float& z) const;
 
-private:
   RegistrationImpl *impl_;
 
+private:
   /* Disable copy and assignment constructors */
   Registration(const Registration&);
   Registration& operator=(const Registration&);
