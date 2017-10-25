@@ -30,6 +30,7 @@
 #include <math.h>
 #include <libfreenect2/registration.h>
 #include <limits>
+#include <stdexcept>
 
 namespace libfreenect2
 {
@@ -107,7 +108,7 @@ void RegistrationImpl::apply(const Frame *rgb, const Frame *depth, Frame *undist
       depth->width != 512 || depth->height != 424 || depth->bytes_per_pixel != 4 ||
       undistorted->width != 512 || undistorted->height != 424 || undistorted->bytes_per_pixel != 4 ||
       registered->width != 512 || registered->height != 424 || registered->bytes_per_pixel != 4)
-    return;
+    throw std::runtime_error("Registration: Invalid frame and/or incorrect size.");
 
   const float *depth_data = (float*)depth->data;
   const unsigned int *rgb_data = (unsigned int*)rgb->data;
