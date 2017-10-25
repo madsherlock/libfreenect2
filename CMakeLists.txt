@@ -116,14 +116,14 @@ SET(SOURCES
   include/internal/libfreenect2/logging.h
 
   include/internal/libfreenect2/async_packet_processor.h
-  include/internal/libfreenect2/depth_packet_processor.h
+  include/libfreenect2/depth_packet_processor.h
   include/internal/libfreenect2/depth_packet_stream_parser.h
-  include/internal/libfreenect2/allocator.h
+  include/libfreenect2/allocator.h
   include/libfreenect2/frame_listener.hpp
   include/libfreenect2/frame_listener_impl.h
   include/libfreenect2/libfreenect2.hpp
   include/libfreenect2/packet_pipeline.h
-  include/internal/libfreenect2/packet_processor.h
+  include/libfreenect2/packet_processor.h
   include/libfreenect2/registration.h
   include/internal/libfreenect2/resource.h
   include/internal/libfreenect2/rgb_packet_processor.h
@@ -328,9 +328,9 @@ IF(ENABLE_OPENCL)
     # Major Linux distro stable releases have buggy OpenCL ICD loader.
     # The workaround of disabling exceptions can only be set up during compile time.
     # Diabling it for all should be harmless. The flag is the same for GCC/Clang/ICC.
-    IF(UNIX AND NOT APPLE)
-      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions")
-    ENDIF()
+    #    IF(UNIX AND NOT APPLE)
+    #      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions")
+    #    ENDIF()
   ENDIF(OpenCL_FOUND)
 ENDIF(ENABLE_OPENCL)
 
